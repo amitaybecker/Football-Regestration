@@ -1,0 +1,15 @@
+rules_version = '2';
+
+// MVP rules: open read+write on the active game and its players.
+// Identity is name-only, so anyone with the link can register, edit, and create.
+// Tighten before going beyond a trusted group.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /games/active {
+      allow read, write: if true;
+    }
+    match /games/active/players/{playerId} {
+      allow read, write: if true;
+    }
+  }
+}
